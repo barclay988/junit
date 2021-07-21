@@ -1,22 +1,22 @@
 package com.psybergate.vacwork2021.tax.income;
-
+import java.math.BigDecimal;
 public class Income {
 
-  private static double INTEREST_EXEMPTION_AMOUNT = 23800.00;
+  private static  BigDecimal INTEREST_EXEMPTION_AMOUNT = new BigDecimal(23800.00);
 
-  private static double CAPITAL_GAINS_RATE = 0.4;
+  private static BigDecimal CAPITAL_GAINS_RATE = new BigDecimal(0.4);
 
-  private static double CAPITAL_GAINS_EXEMPTION_AMOUNT = 40000.00;
+  private static BigDecimal CAPITAL_GAINS_EXEMPTION_AMOUNT = new BigDecimal(40000.00);
 
-  private double salary;
+  private BigDecimal salary;
 
-  private double bonus;
+  private BigDecimal bonus;
 
-  private double interestReceived;
+  private BigDecimal interestReceived;
 
-  private double totalCapitalGains;
+  private BigDecimal totalCapitalGains;
 
-  public Income(double salary, double bonus, double interestReceived, double totalCapitalGains) {
+  public Income(BigDecimal salary, BigDecimal bonus, BigDecimal interestReceived, BigDecimal totalCapitalGains) {
 
     this.salary = salary;
     this.bonus = bonus;
@@ -28,46 +28,48 @@ public class Income {
 
   }
 
-  public static double calculateTotalIncome(double salary, double bonus, double interestReceived,
-                                            double totalCapitalGains) {
+  public static BigDecimal calculateTotalIncome(BigDecimal salary, BigDecimal bonus, BigDecimal interestReceived,
+                                                BigDecimal totalCapitalGains) {
 
-    return salary + bonus + calculateInterestReceived(interestReceived) + calculateCapitalGains(totalCapitalGains);
+    return salary.add(bonus).add(calculateInterestReceived(interestReceived).add(calculateCapitalGains(totalCapitalGains))).setScale(0, BigDecimal.ROUND_HALF_UP);
 
   }
 
-  public static double calculateInterestReceived(double interestReceived) {
+  public static BigDecimal calculateInterestReceived(BigDecimal interestReceived) {
 
-    if ((interestReceived - INTEREST_EXEMPTION_AMOUNT) < 0) {
-      return 0.0;
+    BigDecimal zero = new BigDecimal(0.0);
+    if ((interestReceived.subtract(INTEREST_EXEMPTION_AMOUNT)).compareTo(zero) < 0) {
+      return zero;
     } else {
-      return interestReceived - INTEREST_EXEMPTION_AMOUNT;
+      return interestReceived.subtract(INTEREST_EXEMPTION_AMOUNT);
     }
 
   }
 
-  public static double calculateCapitalGains(double totalCapitalGains) {
+  public static BigDecimal calculateCapitalGains(BigDecimal totalCapitalGains) {
 
-    if (totalCapitalGains < CAPITAL_GAINS_EXEMPTION_AMOUNT) {
-      return 0.0;
+    BigDecimal zero = new BigDecimal(0.0);
+    if (totalCapitalGains.compareTo(CAPITAL_GAINS_EXEMPTION_AMOUNT) < 0) {
+      return zero;
     } else {
-      return (totalCapitalGains - CAPITAL_GAINS_EXEMPTION_AMOUNT) * CAPITAL_GAINS_RATE;
+      return (totalCapitalGains.subtract(CAPITAL_GAINS_EXEMPTION_AMOUNT)).multiply(CAPITAL_GAINS_RATE).setScale(0, BigDecimal.ROUND_HALF_UP);
     }
 
   }
 
-  public double getSalary() {
+  public BigDecimal getSalary() {
     return salary;
   }
 
-  public double getBonus() {
+  public BigDecimal getBonus() {
     return bonus;
   }
 
-  public double getInterestReceived() {
+  public BigDecimal getInterestReceived() {
     return interestReceived;
   }
 
-  public double getTotalCapitalGains() {
+  public BigDecimal getTotalCapitalGains() {
     return totalCapitalGains;
   }
 

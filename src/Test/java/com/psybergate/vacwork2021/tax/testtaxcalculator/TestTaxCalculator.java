@@ -9,27 +9,47 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestTaxCalculator {
+  private static final BigDecimal salary = new BigDecimal(500000);
+  private static final BigDecimal bonus = new BigDecimal(25000);
+  private static final BigDecimal interestReceived = new BigDecimal(45000);
+  private static final BigDecimal totalCapitalGains = new BigDecimal(800000);
+
+  private static final BigDecimal retirementFund = new BigDecimal(150000);
+  private static final BigDecimal travelAllowance = new BigDecimal(100000);
+
+  private static final BigDecimal medicalCredits = new BigDecimal(15000);
+  private static final BigDecimal primaryRebate = new BigDecimal(15714);
+
   private static Income income;
   private  static Expense expense;
   private static Credit credit;
   private static TaxCalculator taxCalculator;
   private static TaxTable taxTable;
 
+
+
   @BeforeAll
   public static void setup(){
-    income = new Income(500000,25000,45000,800000);
-    expense = new Expense(150000,100000);
-    credit = new Credit(15000,15174);
+
+    income = new Income(salary,bonus,interestReceived,totalCapitalGains);
+    expense = new Expense(retirementFund,travelAllowance);
+    credit = new Credit(medicalCredits,primaryRebate);
     taxTable = new TaxTable();
+    taxTable.setLowerBounds();
+    taxTable.setUpperBounds();
+    taxTable.setRates();
     taxCalculator = new TaxCalculator(income,expense,credit,taxTable);
   }
   @Test
   @DisplayName("Total payable tax: ")
   public void TestingTaxCalculator(){
-    assertEquals(140389,taxCalculator.netTaxPayableTax(income,expense,credit,taxTable));
+    BigDecimal expectedAmount = new BigDecimal(140389);
+    assertEquals(expectedAmount,taxCalculator.netTaxPayableTax(income,expense,credit,taxTable));
   }
 
 }

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCredit {
@@ -18,13 +20,18 @@ public class TestCredit {
   @Test
   @DisplayName("Total credits: ")
   public void TestingTotalCredits(){
-    assertEquals(27714, credits.totalCredits(15000,15714));
+    BigDecimal medicalCredits = new BigDecimal(15000);
+    BigDecimal primaryRebate = new BigDecimal(15714);
+    BigDecimal expectedAmount = new BigDecimal(27714.00);
+    assertEquals(expectedAmount, credits.totalCredits(medicalCredits,primaryRebate));
   }
 
   @Test
   @DisplayName("Medical credits: ")
   public void TestingMedicalCredits(){
-    assertEquals(12000, credits.getMedicalCredits(15000));
+    BigDecimal medicalCredits = new BigDecimal(15000);
+    BigDecimal expectedAmount = new BigDecimal(12000);
+    assertEquals(expectedAmount, credits.getMedicalCredits(medicalCredits));
   }
 
 

@@ -4,7 +4,7 @@ import com.psybergate.vacwork2021.tax.Expense.Expense;
 import com.psybergate.vacwork2021.tax.income.Income;
 import com.psybergate.vacwork2021.tax.taxtable.TaxTable;
 import com.psybergate.vacwork2021.tax.credit.Credit;
-
+import java.math.BigDecimal;
 public class TaxCalculator {
 
   private final Income income;
@@ -25,13 +25,11 @@ public class TaxCalculator {
 //
 //  }
 
-  public double netTaxPayableTax(Income income, Expense expense, Credit credit, TaxTable taxTable) {
-    double totalIncome = Income
-        .calculateTotalIncome(income.getSalary(), income.getBonus(), income.getInterestReceived(),
-            income.getTotalCapitalGains());
-    double totalExpenses = expense.calculateTotalExpenses(expense.getRetirementFund(), expense.getTravelAllowance());
-    double taxPayable = taxTable.payableTax((totalIncome - totalExpenses));
-    return taxPayable - credit.totalCredits(credit.getMedicalCredits(), credit.getPrimaryRebate());
+  public BigDecimal netTaxPayableTax(Income income, Expense expense, Credit credit, TaxTable taxTable) {
+    BigDecimal totalIncome = Income.calculateTotalIncome(income.getSalary(), income.getBonus(), income.getInterestReceived(),income.getTotalCapitalGains());
+    BigDecimal totalExpenses = expense.calculateTotalExpenses(expense.getRetirementFund(), expense.getTravelAllowance());
+    BigDecimal taxPayable = taxTable.payableTax((totalIncome.subtract(totalExpenses) ));
+    return taxPayable.subtract(credit.totalCredits(credit.getMedicalCredits(), credit.getPrimaryRebate())).setScale(0, BigDecimal.ROUND_HALF_UP);
   }
 
 }

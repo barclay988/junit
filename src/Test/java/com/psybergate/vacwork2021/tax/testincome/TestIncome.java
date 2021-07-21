@@ -4,7 +4,7 @@ import com.psybergate.vacwork2021.tax.income.Income;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
+import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestIncome {
@@ -18,19 +18,28 @@ public class TestIncome {
   @Test
   @DisplayName("Interest received: ")
   public void TestingInterestReceived(){
-    assertEquals(21200,income.calculateInterestReceived(45000));
+    BigDecimal interestReceived = new BigDecimal(45000);
+    BigDecimal expectedAmount = new BigDecimal(21200);
+    assertEquals(expectedAmount,income.calculateInterestReceived(interestReceived));
   }
 
   @Test
   @DisplayName("Total capital gains: ")
   public void TestingCapitalGains(){
-    assertEquals(304000,income.calculateCapitalGains(800000));
+    BigDecimal totalCapitalGains = new BigDecimal(800000);
+    BigDecimal expectedAmount = new BigDecimal(304000);
+    assertEquals(expectedAmount,income.calculateCapitalGains(totalCapitalGains));
   }
 
   @Test
   @DisplayName("Total income: ")
   public void TestingTotalIncome(){
-    assertEquals(850200,income.calculateTotalIncome(500000,25000,45000,800000));
+    BigDecimal salary = new BigDecimal(500000);
+    BigDecimal bonus = new BigDecimal(25000);
+    BigDecimal interestReceived = new BigDecimal(45000);
+    BigDecimal totalCapitalGains = new BigDecimal(800000);
+    BigDecimal expectedAmount = new BigDecimal(850200);
+    assertEquals(expectedAmount,income.calculateTotalIncome(salary,bonus,interestReceived,totalCapitalGains));
   }
 
 }

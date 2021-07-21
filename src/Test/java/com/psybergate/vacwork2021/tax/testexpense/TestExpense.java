@@ -4,6 +4,7 @@ import com.psybergate.vacwork2021.tax.Expense.Expense;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,17 +19,24 @@ public class TestExpense {
   @Test
   @DisplayName("Total expenses: ")
   public void TestingTotalExpenses(){
-    assertEquals(224375, expenses.calculateTotalExpenses(150000,100000));
+    BigDecimal retirementFund = new BigDecimal(150000);
+    BigDecimal travelAllowance = new BigDecimal(100000);
+    BigDecimal expectedAmount = new BigDecimal(224375);
+    assertEquals(expectedAmount, expenses.calculateTotalExpenses(retirementFund,travelAllowance));
   }
   @Test
   @DisplayName("Travel allowance:")
   public void TestingTravelAllowance(){
-    assertEquals(80000, expenses.calculateTravelAllowance(100000));
+    BigDecimal travelAllowance = new BigDecimal(100000);
+    BigDecimal expectedAmount = new BigDecimal(80000);
+    assertEquals(expectedAmount, expenses.calculateTravelAllowance(travelAllowance));
   }
   @Test
   @DisplayName("Retirement fund:")
   public void TestingRetirementFund(){
-    assertEquals(144375, expenses.calculateRetirementFund(150000));
+    BigDecimal retirementFund = new BigDecimal(150000);
+    BigDecimal expectedAmount = new BigDecimal(144375);
+    assertEquals(expectedAmount, expenses.calculateRetirementFund(retirementFund));
   }
 
 }

@@ -1,16 +1,17 @@
 package com.psybergate.vacwork2021.tax.Expense;
+import java.math.BigDecimal;
 
 public class Expense {
 
-  private static double RETIREMENT_FUND_EXEMPTION = 144375.00;
+  private static BigDecimal RETIREMENT_FUND_EXEMPTION = new BigDecimal(144375.00) ;
 
-  private static double TRAVEL_ALLOWANCE_EXEMPTION = 80000.00;
+  private static BigDecimal TRAVEL_ALLOWANCE_EXEMPTION = new BigDecimal(80000.00);
 
-  private double retirementFund;
+  private BigDecimal retirementFund;
 
-  private double travelAllowance;
+  private BigDecimal travelAllowance;
 
-  public Expense(double retirementFund, double travelAllowance) {
+  public Expense(BigDecimal retirementFund, BigDecimal travelAllowance) {
 
     this.retirementFund = retirementFund;
     this.travelAllowance = travelAllowance;
@@ -19,17 +20,17 @@ public class Expense {
 
   }
 
-  public double calculateTravelAllowance(double travelAllowance) {
+  public BigDecimal calculateTravelAllowance(BigDecimal travelAllowance) {
 
-    if (travelAllowance < TRAVEL_ALLOWANCE_EXEMPTION) {
+    if (travelAllowance.compareTo(TRAVEL_ALLOWANCE_EXEMPTION)<0) {
       return travelAllowance;
     } else {
       return TRAVEL_ALLOWANCE_EXEMPTION;
     }
   }
 
-  public double calculateRetirementFund(double retirementFund) {
-    if (retirementFund < RETIREMENT_FUND_EXEMPTION) {
+  public BigDecimal calculateRetirementFund(BigDecimal retirementFund) {
+    if (retirementFund.compareTo(RETIREMENT_FUND_EXEMPTION)<0) {
       return retirementFund;
     } else {
       return RETIREMENT_FUND_EXEMPTION;
@@ -37,15 +38,15 @@ public class Expense {
 
   }
 
-  public double calculateTotalExpenses(double retirementFund, double travelAllowance) {
-    return calculateRetirementFund(retirementFund) + calculateTravelAllowance(travelAllowance);
+  public BigDecimal calculateTotalExpenses(BigDecimal retirementFund, BigDecimal travelAllowance) {
+    return calculateRetirementFund(retirementFund).add(calculateTravelAllowance(travelAllowance));
   }
 
-  public double getRetirementFund() {
+  public BigDecimal getRetirementFund() {
     return retirementFund;
   }
 
-  public double getTravelAllowance() {
+  public BigDecimal getTravelAllowance() {
     return travelAllowance;
   }
 

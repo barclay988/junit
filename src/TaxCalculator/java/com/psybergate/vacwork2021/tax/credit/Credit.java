@@ -1,13 +1,13 @@
 package com.psybergate.vacwork2021.tax.credit;
-
+import java.math.BigDecimal;
 public class Credit {
-  private static double MAX_MEDICAL_CREDITS = 12000.00;
+  private static final BigDecimal MAX_MEDICAL_CREDITS = new BigDecimal(12000.00);
 
-  private double medicalCredits;
+  private BigDecimal medicalCredits;
 
-  private double primaryRebate;
+  private BigDecimal primaryRebate;
 
-  public Credit(double medicalCredits, double primaryRebate) {
+  public Credit(BigDecimal medicalCredits, BigDecimal primaryRebate) {
     this.medicalCredits = medicalCredits;
     this.primaryRebate = primaryRebate;
 
@@ -16,24 +16,24 @@ public class Credit {
 
   }
 
-  public double totalCredits(double medicalCredits, double primaryRebate) {
+  public BigDecimal totalCredits(BigDecimal medicalCredits, BigDecimal primaryRebate) {
 
-    return getMedicalCredits(medicalCredits) + primaryRebate;
+    return getMedicalCredits(medicalCredits).add(primaryRebate) ;
   }
 
-  public double getMedicalCredits(double medicalCredits) {
-    if (medicalCredits < MAX_MEDICAL_CREDITS) {
+  public BigDecimal getMedicalCredits(BigDecimal medicalCredits) {
+    if (medicalCredits.compareTo(MAX_MEDICAL_CREDITS) < 0) {
       return medicalCredits;
     } else {
       return MAX_MEDICAL_CREDITS;
     }
   }
 
-  public double getMedicalCredits() {
+  public BigDecimal getMedicalCredits() {
     return medicalCredits;
   }
 
-  public double getPrimaryRebate() {
+  public BigDecimal getPrimaryRebate() {
     return primaryRebate;
   }
 
