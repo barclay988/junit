@@ -38,9 +38,9 @@ public class TaxPayer {
     Expense expense = new Expense(retirementFund, travelAllowanceReceived);
     Credit credit = new Credit(medicalCredits, primaryRebate);
     TaxTable taxTable = new TaxTable();
-    taxTable.setLowerBounds();
-    taxTable.setUpperBounds();
-    taxTable.setRates();
+    taxTable.initializeLowerBounds();
+    taxTable.initializeUpperBounds();
+    taxTable.initializeRates();
 
     TaxCalculator taxCalculator = new TaxCalculator(income, expense, credit, taxTable);
     System.out.println("Net tax payable is: " + taxCalculator.netTaxPayableTax(income, expense, credit, taxTable));

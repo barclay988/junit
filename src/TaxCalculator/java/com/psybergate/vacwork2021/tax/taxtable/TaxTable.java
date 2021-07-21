@@ -6,37 +6,53 @@ import java.util.List;
 
 public class TaxTable {
 
-  ArrayList<BigDecimal> lowerBounds = new ArrayList<BigDecimal>(7);
+  private final ArrayList<BigDecimal> lowerBounds = new ArrayList<BigDecimal>(7);
 
-  BigDecimal firstLowerBound = new BigDecimal("0.00");
+  private final BigDecimal firstLowerBound = new BigDecimal("0.00");
 
-  BigDecimal secondLowerBound = new BigDecimal("216200.00");
+  private final BigDecimal secondLowerBound = new BigDecimal("216200.00");
 
-  BigDecimal thirdLowerBound = new BigDecimal("337801.00");
+  private final BigDecimal thirdLowerBound = new BigDecimal("337801.00");
 
-  BigDecimal fourthLowerBound = new BigDecimal("467501.00");
+  private final BigDecimal fourthLowerBound = new BigDecimal("467501.00");
 
-  BigDecimal fiveLowerBound = new BigDecimal("613601.00");
+  private final BigDecimal fiveLowerBound = new BigDecimal("613601.00");
 
-  BigDecimal sixthLowerBound = new BigDecimal("782201.00");
+  private final BigDecimal sixthLowerBound = new BigDecimal("782201.00");
 
-  BigDecimal seventhLowerBound = new BigDecimal("1656601.00");
+  private final BigDecimal seventhLowerBound = new BigDecimal("1656601.00");
 
-  ArrayList<BigDecimal> upperBounds = new ArrayList<BigDecimal>(7);
+  private final ArrayList<BigDecimal> upperBounds = new ArrayList<BigDecimal>(7);
 
-  BigDecimal firstUpperBound = new BigDecimal("216200.00");
+  private final BigDecimal firstUpperBound = new BigDecimal("216200.00");
 
-  BigDecimal secondUpperBound = new BigDecimal("337800.00");
+  private final BigDecimal secondUpperBound = new BigDecimal("337800.00");
 
-  BigDecimal thirdUpperBound = new BigDecimal("467500.00");
+  private final BigDecimal thirdUpperBound = new BigDecimal("467500.00");
 
-  BigDecimal fourthUpperBound = new BigDecimal("613600.00");
+  private final BigDecimal fourthUpperBound = new BigDecimal("613600.00");
 
-  BigDecimal fiveUpperBound = new BigDecimal("782200.00");
+  private final BigDecimal fiveUpperBound = new BigDecimal("782200.00");
 
-  BigDecimal sixthUpperBound = new BigDecimal("1656600.00");
+  private final BigDecimal sixthUpperBound = new BigDecimal("1656600.00");
 
-  BigDecimal seventhUpperBound = new BigDecimal("100000000.00");
+  private final BigDecimal seventhUpperBound = new BigDecimal("100000000.00");
+
+  private final ArrayList<BigDecimal> rates = new ArrayList<BigDecimal>(7);
+
+  private final BigDecimal firstRate = new BigDecimal("0.18");
+
+  private final BigDecimal secondRate = new BigDecimal("0.26");
+
+  private final BigDecimal thirdRate = new BigDecimal("0.31");
+
+  private final BigDecimal fourthRate = new BigDecimal("0.36");
+
+  private final BigDecimal fiveRate = new BigDecimal("0.39");
+
+  private final BigDecimal sixthRate = new BigDecimal("0.41");
+
+  private final BigDecimal seventhRate = new BigDecimal("0.45");
 
 
   public TaxTable() {
@@ -47,7 +63,7 @@ public class TaxTable {
 
 
 
-  public void setLowerBounds() {
+  public void initializeLowerBounds() {
     lowerBounds.add(firstLowerBound);
     lowerBounds.add(secondLowerBound);
     lowerBounds.add(thirdLowerBound);
@@ -60,7 +76,7 @@ public class TaxTable {
 
 
 
-  public void setUpperBounds() {
+  public void initializeUpperBounds() {
     upperBounds.add(firstUpperBound);
     upperBounds.add(secondUpperBound);
     upperBounds.add(thirdUpperBound);
@@ -70,23 +86,8 @@ public class TaxTable {
     upperBounds.add(seventhUpperBound);
   }
 
-  ArrayList<BigDecimal> rates = new ArrayList<BigDecimal>(7);
 
-  BigDecimal firstRate = new BigDecimal("0.18");
-
-  BigDecimal secondRate = new BigDecimal("0.26");
-
-  BigDecimal thirdRate = new BigDecimal("0.31");
-
-  BigDecimal fourthRate = new BigDecimal("0.36");
-
-  BigDecimal fiveRate = new BigDecimal("0.39");
-
-  BigDecimal sixthRate = new BigDecimal("0.41");
-
-  BigDecimal seventhRate = new BigDecimal("0.45");
-
-  public void setRates() {
+  public void initializeRates() {
     rates.add(firstRate);
     rates.add(secondRate);
     rates.add(thirdRate);
@@ -95,16 +96,25 @@ public class TaxTable {
     rates.add(sixthRate);
     rates.add(seventhRate);
   }
-
-  public BigDecimal payableTax(BigDecimal netTaxableIncome) {//break into smaller pieces
-    BigDecimal taxableIncome = new BigDecimal("0.00");
-    BigDecimal totalTaxableAmount = new BigDecimal("0.00");
-    for (int i = 0; i < 7; i++) {
-      taxableIncome = (netTaxableIncome.min(this.upperBounds.get(i).subtract(this.lowerBounds.get(i))));
-      totalTaxableAmount = totalTaxableAmount.add(taxableIncome.multiply(this.rates.get(i)));
-      netTaxableIncome = netTaxableIncome.subtract(taxableIncome);
-    }
-    return totalTaxableAmount.setScale(0, BigDecimal.ROUND_HALF_UP);
+  public ArrayList<BigDecimal> getLowerBounds(){
+    return lowerBounds;
   }
+  public ArrayList<BigDecimal> getUpperBounds(){
+    return upperBounds;
+  }
+  public ArrayList<BigDecimal> getRates(){
+    return rates;
+  }
+
+//  public BigDecimal payableTax(BigDecimal netTaxableIncome) {//break into smaller pieces
+//    BigDecimal taxableIncome = new BigDecimal("0.00");
+//    BigDecimal totalTaxableAmount = new BigDecimal("0.00");
+//    for (int i = 0; i < 7; i++) {
+//      taxableIncome = (netTaxableIncome.min(this.upperBounds.get(i).subtract(this.lowerBounds.get(i))));
+//      totalTaxableAmount = totalTaxableAmount.add(taxableIncome.multiply(this.rates.get(i)));
+//      netTaxableIncome = netTaxableIncome.subtract(taxableIncome);
+//    }
+//    return totalTaxableAmount.setScale(0, BigDecimal.ROUND_HALF_UP);
+//  }
 
 }

@@ -24,6 +24,7 @@ public class TestTaxCalculator {
 
   private static final BigDecimal medicalCredits = new BigDecimal(15000);
   private static final BigDecimal primaryRebate = new BigDecimal(15714);
+  private static final BigDecimal netTaxableIncome = new BigDecimal(625825.00);
 
   private static Income income;
   private  static Expense expense;
@@ -40,9 +41,9 @@ public class TestTaxCalculator {
     expense = new Expense(retirementFund,travelAllowance);
     credit = new Credit(medicalCredits,primaryRebate);
     taxTable = new TaxTable();
-    taxTable.setLowerBounds();
-    taxTable.setUpperBounds();
-    taxTable.setRates();
+    taxTable.initializeLowerBounds();
+    taxTable.initializeUpperBounds();
+    taxTable.initializeRates();
     taxCalculator = new TaxCalculator(income,expense,credit,taxTable);
   }
   @Test
@@ -50,6 +51,13 @@ public class TestTaxCalculator {
   public void TestingTaxCalculator(){
     BigDecimal expectedAmount = new BigDecimal(140389);
     assertEquals(expectedAmount,taxCalculator.netTaxPayableTax(income,expense,credit,taxTable));
+  }
+  @Test
+  @DisplayName("Payable tax: ")
+  public void testingTaxTable(){
+
+    BigDecimal expectedAmount = new BigDecimal(168103);
+    assertEquals(expectedAmount,TaxCalculator.payableTax(netTaxableIncome));
   }
 
 }

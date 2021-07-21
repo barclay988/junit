@@ -9,7 +9,8 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestExpense {
-
+  private final BigDecimal retirementFund = new BigDecimal(150000);
+  private final BigDecimal travelAllowance = new BigDecimal(100000);
   private static Expense expenses;
 
   @BeforeAll
@@ -19,22 +20,21 @@ public class TestExpense {
   @Test
   @DisplayName("Total expenses: ")
   public void TestingTotalExpenses(){
-    BigDecimal retirementFund = new BigDecimal(150000);
-    BigDecimal travelAllowance = new BigDecimal(100000);
+
     BigDecimal expectedAmount = new BigDecimal(224375);
     assertEquals(expectedAmount, expenses.calculateTotalExpenses(retirementFund,travelAllowance));
   }
   @Test
   @DisplayName("Travel allowance:")
   public void TestingTravelAllowance(){
-    BigDecimal travelAllowance = new BigDecimal(100000);
+
     BigDecimal expectedAmount = new BigDecimal(80000);
     assertEquals(expectedAmount, expenses.calculateTravelAllowance(travelAllowance));
   }
   @Test
   @DisplayName("Retirement fund:")
   public void TestingRetirementFund(){
-    BigDecimal retirementFund = new BigDecimal(150000);
+
     BigDecimal expectedAmount = new BigDecimal(144375);
     assertEquals(expectedAmount, expenses.calculateRetirementFund(retirementFund));
   }
