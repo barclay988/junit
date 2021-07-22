@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 
 import java.util.Scanner;
 
-public class TaxPayer {
-  //private static DecimalFormat df = new DecimalFormat("0.00");
+public class Client {
+
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
@@ -22,7 +22,7 @@ public class TaxPayer {
     System.out.print("Interest Received: R ");
     BigDecimal interestReceived = BigDecimal.valueOf(sc.nextDouble());
     System.out.print("Capital Gains: R ");
-    BigDecimal capitalGains = BigDecimal.valueOf(sc.nextDouble());
+    BigDecimal totalCapitalGains = BigDecimal.valueOf(sc.nextDouble());
 
     System.out.print("Retirement Fund: R ");
     BigDecimal retirementFund = BigDecimal.valueOf(sc.nextDouble());
@@ -34,16 +34,39 @@ public class TaxPayer {
     System.out.print("Primary Rebate: R ");
     BigDecimal primaryRebate = BigDecimal.valueOf(sc.nextDouble());
 
-    Income income = new Income(salary, bonus, interestReceived, capitalGains);
-    Expense expense = new Expense(retirementFund, travelAllowanceReceived);
-    Credit credit = new Credit(medicalCredits, primaryRebate);
+
+    Income income = new Income();
+    income.setSalary(salary);
+    income.setBonus(bonus);
+    income.setInterestReceived(interestReceived);
+    income.setTotalCapitalGains(totalCapitalGains);
+
+
+    Expense expense = new Expense();
+    expense.setRetirementFund(retirementFund);
+    expense.setTravelAllowance(travelAllowanceReceived);
+
+    Credit credit = new Credit();
+    credit.setMedicalCredits(medicalCredits);
+    credit.setPrimaryRebate(primaryRebate);
+
+    // optimize the tax table
     TaxTable taxTable = new TaxTable();
     taxTable.initializeLowerBounds();
     taxTable.initializeUpperBounds();
     taxTable.initializeRates();
 
-    TaxCalculator taxCalculator = new TaxCalculator(income, expense, credit, taxTable);
-    System.out.println("Net tax payable is: " + taxCalculator.netTaxPayableTax(income, expense, credit, taxTable));
+    TaxCalculator taxCalculator = new TaxCalculator();
+
+    BigDecimal totalExpense = taxCalculator.calculateTotalExpenses(retirementFund,travelAllowanceReceived);
+
+    BigDecimal totalIncome = taxCalculator.calculateTotalIncome(salary,bonus,interestReceived,totalCapitalGains);
+
+    BigDecimal totalCredits = taxCalculator.calculateTotalCredits(medicalCredits,primaryRebate);
+
+    BigDecimal taxPayable = taxCalculator.payableTax(totalIncome.subtract(totalExpense));
+
+    System.out.println("Net tax payable is: " + taxCalculator.netTaxPayableTax(totalCredits,taxPayable));
 
 
   }

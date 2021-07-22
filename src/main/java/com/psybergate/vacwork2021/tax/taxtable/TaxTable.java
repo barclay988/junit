@@ -59,10 +59,6 @@ public class TaxTable {
 
   }
 
-
-
-
-
   public void initializeLowerBounds() {
     lowerBounds.add(firstLowerBound);
     lowerBounds.add(secondLowerBound);
@@ -72,9 +68,6 @@ public class TaxTable {
     lowerBounds.add(sixthLowerBound);
     lowerBounds.add(seventhLowerBound);
   }
-
-
-
 
   public void initializeUpperBounds() {
     upperBounds.add(firstUpperBound);
@@ -106,15 +99,6 @@ public class TaxTable {
     return rates;
   }
 
-//  public BigDecimal payableTax(BigDecimal netTaxableIncome) {//break into smaller pieces
-//    BigDecimal taxableIncome = new BigDecimal("0.00");
-//    BigDecimal totalTaxableAmount = new BigDecimal("0.00");
-//    for (int i = 0; i < 7; i++) {
-//      taxableIncome = (netTaxableIncome.min(this.upperBounds.get(i).subtract(this.lowerBounds.get(i))));
-//      totalTaxableAmount = totalTaxableAmount.add(taxableIncome.multiply(this.rates.get(i)));
-//      netTaxableIncome = netTaxableIncome.subtract(taxableIncome);
-//    }
-//    return totalTaxableAmount.setScale(0, BigDecimal.ROUND_HALF_UP);
-//  }
+
 
 }
