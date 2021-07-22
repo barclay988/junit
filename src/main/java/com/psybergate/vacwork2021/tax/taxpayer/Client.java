@@ -4,13 +4,11 @@ import com.psybergate.vacwork2021.tax.Expense.Expense;
 import com.psybergate.vacwork2021.tax.credit.Credit;
 import com.psybergate.vacwork2021.tax.income.Income;
 import com.psybergate.vacwork2021.tax.taxcalculator.TaxCalculator;
-import com.psybergate.vacwork2021.tax.taxtable.TaxTable;
-import java.math.BigDecimal;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Client {
-
 
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
@@ -34,13 +32,11 @@ public class Client {
     System.out.print("Primary Rebate: R ");
     BigDecimal primaryRebate = BigDecimal.valueOf(sc.nextDouble());
 
-
     Income income = new Income();
     income.setSalary(salary);
     income.setBonus(bonus);
     income.setInterestReceived(interestReceived);
     income.setTotalCapitalGains(totalCapitalGains);
-
 
     Expense expense = new Expense();
     expense.setRetirementFund(retirementFund);
@@ -50,24 +46,25 @@ public class Client {
     credit.setMedicalCredits(medicalCredits);
     credit.setPrimaryRebate(primaryRebate);
 
-    // optimize the tax table
-    TaxTable taxTable = new TaxTable();
-    taxTable.initializeLowerBounds();
-    taxTable.initializeUpperBounds();
-    taxTable.initializeRates();
 
     TaxCalculator taxCalculator = new TaxCalculator();
 
-    BigDecimal totalExpense = taxCalculator.calculateTotalExpenses(retirementFund,travelAllowanceReceived);
+    BigDecimal totalExpense = taxCalculator.calculateTotalExpenses(retirementFund, travelAllowanceReceived);
 
-    BigDecimal totalIncome = taxCalculator.calculateTotalIncome(salary,bonus,interestReceived,totalCapitalGains);
+    BigDecimal totalIncome = taxCalculator.calculateTotalIncome(salary, bonus, interestReceived, totalCapitalGains);
 
-    BigDecimal totalCredits = taxCalculator.calculateTotalCredits(medicalCredits,primaryRebate);
+    BigDecimal totalCredits = taxCalculator.calculateTotalCredits(medicalCredits, primaryRebate);
+//    System.out.println("total expeses:"+totalExpense);
+//    System.out.println("total income:"+totalIncome);
+//    System.out.println("total credits:"+totalCredits);
+
+    // System.out.println("number:"+totalIncome.subtract(totalExpense));
+
 
     BigDecimal taxPayable = taxCalculator.payableTax(totalIncome.subtract(totalExpense));
+    //System.out.println("payable tax:"+taxPayable);
 
-    System.out.println("Net tax payable is: " + taxCalculator.netTaxPayableTax(totalCredits,taxPayable));
-
+    System.out.println("Net tax payable is: " + taxCalculator.netTaxPayableTax(totalCredits, taxPayable));
 
   }
 

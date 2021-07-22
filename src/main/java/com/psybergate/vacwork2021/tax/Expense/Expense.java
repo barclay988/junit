@@ -1,4 +1,5 @@
 package com.psybergate.vacwork2021.tax.Expense;
+
 import java.math.BigDecimal;
 
 public class Expense {
@@ -7,7 +8,7 @@ public class Expense {
 
   private BigDecimal travelAllowance;
 
-  public Expense(){
+  public Expense() {
 
   }
 
