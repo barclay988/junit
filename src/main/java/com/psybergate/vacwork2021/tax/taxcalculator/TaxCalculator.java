@@ -5,32 +5,33 @@ import com.psybergate.vacwork2021.tax.constant.Constant;
 import java.math.BigDecimal;
 
 public class TaxCalculator {
-
+    private Constant constant;
   public TaxCalculator() {
   }
 
+  //Epenses
   public BigDecimal calculateTravelAllowance(BigDecimal travelAllowance) {
 
-    if (travelAllowance.compareTo(Constant.TRAVEL_ALLOWANCE_EXEMPTION) < 0) {
+    if (travelAllowance.compareTo(constant.TRAVEL_ALLOWANCE_EXEMPTION) < 0) {
       return travelAllowance;
     } else {
-      return Constant.TRAVEL_ALLOWANCE_EXEMPTION;
+      return constant.TRAVEL_ALLOWANCE_EXEMPTION;
     }
   }
-
+  //Epenses
   public BigDecimal calculateRetirementFund(BigDecimal retirementFund) {
     if (retirementFund.compareTo(Constant.RETIREMENT_FUND_EXEMPTION) < 0) {
       return retirementFund;
     } else {
-      return Constant.RETIREMENT_FUND_EXEMPTION;
+      return constant.RETIREMENT_FUND_EXEMPTION;
     }
 
   }
-
+  //Epenses
   public BigDecimal calculateTotalExpenses(BigDecimal retirementFund, BigDecimal travelAllowance) {
     return calculateRetirementFund(retirementFund).add(calculateTravelAllowance(travelAllowance));
   }
-
+  //income
   public BigDecimal calculateTotalIncome(BigDecimal salary, BigDecimal bonus, BigDecimal interestReceived,
                                          BigDecimal totalCapitalGains) {
 
@@ -40,40 +41,39 @@ public class TaxCalculator {
 
   }
 
+  //income
   public BigDecimal calculateInterestReceived(BigDecimal interestReceived) {
 
     BigDecimal zero = new BigDecimal("0.00");
-    if ((interestReceived.subtract(Constant.INTEREST_EXEMPTION_AMOUNT)).compareTo(zero) < 0) {
+    if ((interestReceived.subtract(constant.INTEREST_EXEMPTION_AMOUNT)).compareTo(zero) < 0) {
       return zero;
     } else {
-      return interestReceived.subtract(Constant.INTEREST_EXEMPTION_AMOUNT);
+      return interestReceived.subtract(constant.INTEREST_EXEMPTION_AMOUNT);
     }
 
   }
-
+  //income
   public BigDecimal calculateCapitalGains(BigDecimal totalCapitalGains) {
 
     BigDecimal zero = new BigDecimal("0.00");
-    if (totalCapitalGains.compareTo(Constant.CAPITAL_GAINS_EXEMPTION_AMOUNT) < 0) {
+    if (totalCapitalGains.compareTo(constant.CAPITAL_GAINS_EXEMPTION_AMOUNT) < 0) {
       return zero;
     } else {
-      return (totalCapitalGains.subtract(Constant.CAPITAL_GAINS_EXEMPTION_AMOUNT)).multiply(Constant.CAPITAL_GAINS_RATE)
-                                                                                  .setScale(0,
-                                                                                      BigDecimal.ROUND_HALF_UP);
+      return (totalCapitalGains.subtract(constant.CAPITAL_GAINS_EXEMPTION_AMOUNT)).multiply(constant.CAPITAL_GAINS_RATE).setScale(0,BigDecimal.ROUND_HALF_UP);
     }
 
   }
-
+  //Credits
   public BigDecimal calculateTotalCredits(BigDecimal medicalCredits, BigDecimal primaryRebate) {
 
     return calculateMedicalCredits(medicalCredits).add(primaryRebate);
   }
-
+  //Credits
   public BigDecimal calculateMedicalCredits(BigDecimal medicalCredits) {
-    if (medicalCredits.compareTo(Constant.MAX_MEDICAL_CREDITS) < 0) {
+    if (medicalCredits.compareTo(constant.MAX_MEDICAL_CREDITS) < 0) {
       return medicalCredits;
     } else {
-      return Constant.MAX_MEDICAL_CREDITS;
+      return constant.MAX_MEDICAL_CREDITS;
     }
   }
 
@@ -82,8 +82,8 @@ public class TaxCalculator {
     BigDecimal taxableIncome = new BigDecimal("0.00");
     BigDecimal totalTaxableAmount = new BigDecimal("0.00");
     for (int i = 0; i < 7; i++) {
-      taxableIncome = (netTaxableIncome.min(Constant.TAX_UPPER_BOUND[i].subtract(Constant.TAX_LOWER_BOUND[i])));
-      totalTaxableAmount = totalTaxableAmount.add(taxableIncome.multiply(Constant.TAX_RATES[i]));
+      taxableIncome = (netTaxableIncome.min(constant.TAX_UPPER_BOUND[i].subtract(constant.TAX_LOWER_BOUND[i])));
+      totalTaxableAmount = totalTaxableAmount.add(taxableIncome.multiply(constant.TAX_RATES[i]));
       netTaxableIncome = netTaxableIncome.subtract(taxableIncome);
     }
     return totalTaxableAmount.setScale(0, BigDecimal.ROUND_HALF_UP);

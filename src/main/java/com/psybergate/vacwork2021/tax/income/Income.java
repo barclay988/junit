@@ -4,13 +4,14 @@ import java.math.BigDecimal;
 
 public class Income {
 
-  private BigDecimal salary;
+  private  BigDecimal salary;
 
-  private BigDecimal bonus;
+  private  BigDecimal interestReceived;
 
-  private BigDecimal interestReceived;
+  private  BigDecimal totalCapitalGains;
+  private  BigDecimal bonus;
 
-  private BigDecimal totalCapitalGains;
+
 
   public Income() {
 
@@ -24,7 +25,7 @@ public class Income {
     this.bonus = bonus;
   }
 
-  public void setInterestReceived(BigDecimal interestReceived) {
+  public   void setInterestReceived(BigDecimal interestReceived) {
     this.interestReceived = interestReceived;
   }
 
@@ -32,19 +33,19 @@ public class Income {
     this.totalCapitalGains = totalCapitalGains;
   }
 
-  public BigDecimal getSalary() {
+  public  BigDecimal getSalary() {
     return salary;
   }
 
-  public BigDecimal getBonus() {
+  public  BigDecimal getBonus() {
     return bonus;
   }
 
-  public BigDecimal getInterestReceived() {
+  public  BigDecimal getInterestReceived() {
     return interestReceived;
   }
 
-  public BigDecimal getTotalCapitalGains() {
+  public  BigDecimal getTotalCapitalGains() {
     return totalCapitalGains;
   }
 
