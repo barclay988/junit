@@ -1,3 +1,4 @@
+package com.psybergate.vacwork2021.tax.income;
 import java.math.BigDecimal;
 public class Income {
 
