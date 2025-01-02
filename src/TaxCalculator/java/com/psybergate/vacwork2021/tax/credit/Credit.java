@@ -1,3 +1,4 @@
+package com.psybergate.vacwork2021.tax.credit;
 import java.math.BigDecimal;
 public class Credit {
   private static final BigDecimal MAX_MEDICAL_CREDITS = new BigDecimal(12000.00);
